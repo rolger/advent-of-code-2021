@@ -45,11 +45,6 @@ class Move {
     }
 }
 
-
-function scoreRockPaperScissor(opponent: string, me: string) {
-    return Move.of(me).scoreRockPaperScissor(Move.of(opponent));
-}
-
 function expectedMove(opponent: Move, expectedResult: string): Move {
     if (expectedResult === 'Y')
         return opponent;
@@ -74,95 +69,102 @@ function expectedMove(opponent: Move, expectedResult: string): Move {
 
 describe('Day2 Test', () => {
 
-    it('should score a draw', () => {
-        expect(scoreRockPaperScissor('A', 'X')).toBe(4);
-        expect(scoreRockPaperScissor('B', 'Y')).toBe(5);
-        expect(scoreRockPaperScissor('C', 'Z')).toBe(6);
+    describe('1st Puzzle', () => {
+        const scoreRockPaperScissor = (opponent: string, me: string) => Move.of(me).scoreRockPaperScissor(Move.of(opponent));
+
+        it('should score a draw', () => {
+            expect(scoreRockPaperScissor('A', 'X')).toBe(4);
+            expect(scoreRockPaperScissor('B', 'Y')).toBe(5);
+            expect(scoreRockPaperScissor('C', 'Z')).toBe(6);
+        });
+
+        it('should loose the game', () => {
+            expect(scoreRockPaperScissor('B', 'X')).toBe(1);
+            expect(scoreRockPaperScissor('C', 'Y')).toBe(2);
+            expect(scoreRockPaperScissor('A', 'Z')).toBe(3);
+        });
+
+        it('should win the game', () => {
+            expect(scoreRockPaperScissor('C', 'X')).toBe(7);
+            expect(scoreRockPaperScissor('A', 'Y')).toBe(8);
+            expect(scoreRockPaperScissor('B', 'Z')).toBe(9);
+        });
+
+        it('should count all rounds', () => {
+            let input = [
+                "A Y",
+                "B X",
+                "C Z",
+            ];
+
+            let allRounds = input
+                .map(s => scoreRockPaperScissor(s.split(" ")[0], s.split(" ")[1]))
+                .reduce((score, value) => score + value, 0);
+
+            expect(allRounds).toBe(15);
+        });
+
+        it('should calculate all rounds from file', () => {
+            let input = readInput(2);
+
+            let allRounds = input
+                .map(s => scoreRockPaperScissor(s.split(" ")[0], s.split(" ")[1]))
+                .reduce((score, value) => score + value, 0);
+
+            expect(allRounds).toStrictEqual(11475);
+        });
     });
 
-    it('should loose the game', () => {
-        expect(scoreRockPaperScissor('B', 'X')).toBe(1);
-        expect(scoreRockPaperScissor('C', 'Y')).toBe(2);
-        expect(scoreRockPaperScissor('A', 'Z')).toBe(3);
-    });
+    describe('2nd Puzzle', () => {
 
-    it('should win the game', () => {
-        expect(scoreRockPaperScissor('C', 'X')).toBe(7);
-        expect(scoreRockPaperScissor('A', 'Y')).toBe(8);
-        expect(scoreRockPaperScissor('B', 'Z')).toBe(9);
-    });
+        it('should end with a draw', () => {
+            expect(expectedMove(Move.Rock, 'Y')).toBe(Move.Rock);
+            expect(expectedMove(Move.Paper, 'Y')).toBe(Move.Paper);
+        });
 
-    it('should count all rounds', () => {
-        let input = [
-            "A Y",
-            "B X",
-            "C Z",
-        ];
+        it('should end with a win', () => {
+            expect(expectedMove(Move.Scissor, 'Z')).toBe(Move.Rock);
+            expect(expectedMove(Move.Rock, 'Z')).toBe(Move.Paper);
+            expect(expectedMove(Move.Paper, 'Z')).toBe(Move.Scissor);
+        });
 
-        let allRounds = input
-            .map(s => scoreRockPaperScissor(s.split(" ")[0], s.split(" ")[1]))
-            .reduce((score, value) => score + value, 0);
+        it('should end with a loose', () => {
+            expect(expectedMove(Move.Scissor, 'X')).toBe(Move.Paper);
+            expect(expectedMove(Move.Rock, 'X')).toBe(Move.Scissor);
+            expect(expectedMove(Move.Paper, 'X')).toBe(Move.Rock);
+        });
 
-        expect(allRounds).toBe(15);
-    });
+        it('should calculate expected results', () => {
+            let input = [
+                "A Y",
+                "B X",
+                "C Z",
+            ];
 
-    it('should calculate all rounds from file', () => {
-        let input = readInput(2);
+            let allRounds = input
+                .map(s => {
+                    let opponentsMove = Move.of(s.split(" ")[0]);
+                    let myMove = expectedMove(opponentsMove, s.split(" ")[1]);
+                    return myMove.scoreRockPaperScissor(opponentsMove);
+                })
+                .reduce((score, value) => score + value, 0);
 
-        let allRounds = input
-            .map(s => scoreRockPaperScissor(s.split(" ")[0], s.split(" ")[1]))
-            .reduce((score, value) => score + value, 0);
+            expect(allRounds).toBe(12);
+        });
 
-        expect(allRounds).toStrictEqual(11475);
-    });
+        it('should calculate expected results from file', () => {
+            let input = readInput(2);
 
-    it('should end with a draw', () => {
-        expect(expectedMove(Move.Rock, 'Y')).toBe(Move.Rock);
-        expect(expectedMove(Move.Paper, 'Y')).toBe(Move.Paper);
-    });
+            let allRounds = input
+                .map(s => {
+                    let opponentsMove = Move.of(s.split(" ")[0]);
+                    let myMove = expectedMove(opponentsMove, s.split(" ")[1]);
+                    return myMove.scoreRockPaperScissor(opponentsMove);
+                })
+                .reduce((score, value) => score + value, 0);
 
-    it('should end with a win', () => {
-        expect(expectedMove(Move.Scissor, 'Z')).toBe(Move.Rock);
-        expect(expectedMove(Move.Rock, 'Z')).toBe(Move.Paper);
-        expect(expectedMove(Move.Paper, 'Z')).toBe(Move.Scissor);
-    });
-
-    it('should end with a loose', () => {
-        expect(expectedMove(Move.Scissor, 'X')).toBe(Move.Paper);
-        expect(expectedMove(Move.Rock, 'X')).toBe(Move.Scissor);
-        expect(expectedMove(Move.Paper, 'X')).toBe(Move.Rock);
-    });
-
-    it('should calculate expected results', () => {
-        let input = [
-            "A Y",
-            "B X",
-            "C Z",
-        ];
-
-        let allRounds = input
-            .map(s => {
-                let opponentsMove = Move.of(s.split(" ")[0]);
-                let myMove = expectedMove(opponentsMove, s.split(" ")[1]);
-                return myMove.scoreRockPaperScissor(opponentsMove);
-            })
-            .reduce((score, value) => score + value, 0);
-
-        expect(allRounds).toBe(12);
-    });
-
-    it('should calculate expected results from file', () => {
-        let input = readInput(2);
-
-        let allRounds = input
-            .map(s => {
-                let opponentsMove = Move.of(s.split(" ")[0]);
-                let myMove = expectedMove(opponentsMove, s.split(" ")[1]);
-                return myMove.scoreRockPaperScissor(opponentsMove);
-            })
-            .reduce((score, value) => score + value, 0);
-
-        expect(allRounds).toBe(16862);
+            expect(allRounds).toBe(16862);
+        });
     });
 
 });
