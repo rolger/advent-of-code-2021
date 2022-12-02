@@ -1,6 +1,13 @@
 describe('DayN Test', () => {
 
-    it('should', () => {
+    describe('1st Puzzle', () => {
+        it('should', () => {
+        });
+    });
+
+    describe('2nd Puzzle', () => {
+        it('should', () => {
+        });
     });
 
 });
