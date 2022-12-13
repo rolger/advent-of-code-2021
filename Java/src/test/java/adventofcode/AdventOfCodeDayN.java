@@ -1,6 +1,7 @@
 package adventofcode;
 
 import com.google.common.collect.Lists;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,9 +19,10 @@ public class AdventOfCodeDayN {
     }
 
     @Test
+    @Disabled
     public void readInputFromFile() {
 
-        FileReader.readRawInput(1, s -> s)));
+        FileReader.readRawInput(1, s -> s);
 
     }
 }
