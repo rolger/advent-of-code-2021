@@ -24,13 +24,13 @@ class AdventOfCodeDay1 {
     }
 
     private int playRockPaperScissor(String myShape, String otherShape) {
-        if (myShape.equals("A") && otherShape.equals("Y")) {
+        if (Shape.Rock == Shape.of(myShape) && otherShape.equals("Y")) {
             return 1;
         }
 
         if (Shape.Paper == Shape.of(myShape)) {
             return 5;
-        } else if (myShape.equals("C")) {
+        } else if (Shape.Scissor == Shape.of(myShape)) {
             return 6;
         }
         return 4;
@@ -45,12 +45,14 @@ class AdventOfCodeDay1 {
     }
 
     private enum Shape {
-        Paper;
+        Paper, Scissor, Rock;
 
-        public static Shape of(String myShape) {
-            if (myShape.equals( "B"))
-                return Paper;
-            return null;
+        public static Shape of(String shortcut) {
+            return switch (shortcut) {
+                case "B" -> Paper;
+                case "C" -> Scissor;
+                default -> Rock;
+            };
         }
     }
 }
