@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 
 public class FileReader {
 
-    public static <T> List<T> readRawInput(int num, Function<String, T> mapper) {
+    public static <T> List<T> readRawInput(int dayNumber, Function<String, T> mapper) {
         var numbers = new ArrayList<String>();
-        try (Scanner scanner = new Scanner(new File("src/main/resources/input" + num + ".txt"))) {
+        try (Scanner scanner = new Scanner(new File("src/main/resources/input" + dayNumber + ".txt"))) {
             while (scanner.hasNextLine()) {
                 String zeile = (String) scanner.nextLine();
 
