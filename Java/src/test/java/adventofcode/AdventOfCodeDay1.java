@@ -1,7 +1,6 @@
 package adventofcode;
 
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +24,11 @@ class AdventOfCodeDay1 {
     }
 
     private int playRockPaperScissor(String myShape, String otherShape) {
-        if (myShape.equals("B")) {
+        if (myShape.equals("A") && otherShape.equals("Y")) {
+            return 1;
+        }
+
+        if (Shape.Paper == Shape.of(myShape)) {
             return 5;
         } else if (myShape.equals("C")) {
             return 6;
@@ -39,5 +42,15 @@ class AdventOfCodeDay1 {
 
         //FileReader.readRawInput(1, s -> s)));
 
+    }
+
+    private enum Shape {
+        Paper;
+
+        public static Shape of(String myShape) {
+            if (myShape.equals( "B"))
+                return Paper;
+            return null;
+        }
     }
 }
