@@ -6,15 +6,20 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 // https://adventofcode.com/2022
-public class AdventOfCodeDay1 {
+class AdventOfCodeDay1 {
 
     @Test
-    public void sameShapesAreADraw() {
+    void twoRocksAreA4() {
         Assertions.assertThat(playRockPaperScissor("A", "X")).isEqualTo(4);
     }
 
+    @Test
+    void twoPaperAreA5() {
+        Assertions.assertThat(playRockPaperScissor("B", "Y")).isEqualTo(5);
+    }
+
     private int playRockPaperScissor(String myShape, String otherShape) {
-        return 0;
+        return 4;
     }
 
     @Test
