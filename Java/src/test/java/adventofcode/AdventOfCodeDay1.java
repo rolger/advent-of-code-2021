@@ -23,9 +23,11 @@ class AdventOfCodeDay1 {
         assertThat(playRockPaperScissor(myShape, otherShape)).isEqualTo(expectedScore);
     }
 
-    private int playRockPaperScissor(String myShapeShortcut, String otherShape) {
+    private int playRockPaperScissor(String myShapeShortcut, String otherShapeShortcut) {
         Shape myShape = Shape.of(myShapeShortcut);
-        if (Shape.Rock == myShape && otherShape.equals("Y")) {
+        Shape otherShape = Shape.of(otherShapeShortcut);
+
+        if (Shape.Rock == myShape && Shape.Paper == otherShape) {
             return myShape.getScore();
         }
         return myShape.getScore() + 3;
@@ -50,7 +52,7 @@ class AdventOfCodeDay1 {
 
         public static Shape of(String shortcut) {
             return switch (shortcut) {
-                case "B" -> Paper;
+                case "B", "Y" -> Paper;
                 case "C" -> Scissor;
                 default -> Rock;
             };
