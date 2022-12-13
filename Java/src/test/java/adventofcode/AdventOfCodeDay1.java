@@ -23,17 +23,12 @@ class AdventOfCodeDay1 {
         assertThat(playRockPaperScissor(myShape, otherShape)).isEqualTo(expectedScore);
     }
 
-    private int playRockPaperScissor(String myShape, String otherShape) {
-        if (Shape.Rock == Shape.of(myShape) && otherShape.equals("Y")) {
-            return 1;
+    private int playRockPaperScissor(String myShapeShortcut, String otherShape) {
+        Shape myShape = Shape.of(myShapeShortcut);
+        if (Shape.Rock == myShape && otherShape.equals("Y")) {
+            return myShape.getScore();
         }
-
-        if (Shape.Paper == Shape.of(myShape)) {
-            return 5;
-        } else if (Shape.Scissor == Shape.of(myShape)) {
-            return 6;
-        }
-        return 4;
+        return myShape.getScore() + 3;
     }
 
     @Test
@@ -45,7 +40,13 @@ class AdventOfCodeDay1 {
     }
 
     private enum Shape {
-        Paper, Scissor, Rock;
+        Paper(2), Scissor(3), Rock(1);
+
+        private final int score;
+
+        Shape(int score) {
+            this.score = score;
+        }
 
         public static Shape of(String shortcut) {
             return switch (shortcut) {
@@ -53,6 +54,10 @@ class AdventOfCodeDay1 {
                 case "C" -> Scissor;
                 default -> Rock;
             };
+        }
+
+        public int getScore() {
+            return score;
         }
     }
 }
