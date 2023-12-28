@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/maven,java,intellij+all,node,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,java,intellij+all,node,eclipse
 
+### Python ###
+.__pycache__/
+
 ### Eclipse ###
 .metadata
 bin/
