@@ -3,7 +3,10 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,java,intellij+all,node,eclipse
 
 ### Python ###
-.__pycache__/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
 ### Eclipse ###
 .metadata
